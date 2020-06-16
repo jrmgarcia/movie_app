@@ -7,7 +7,7 @@ class NowPlayingListBloc {
   final BehaviorSubject<MovieResponse> _subject =
       BehaviorSubject<MovieResponse>();
 
-  getMoviesByGenre(int id) async {
+  getMovies() async {
     MovieResponse response = await _repository.getPlayingMovies();
     _subject.sink.add(response);
   }

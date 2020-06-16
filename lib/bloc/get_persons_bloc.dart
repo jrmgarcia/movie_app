@@ -1,4 +1,3 @@
-import 'package:movie_app/model/movie_response.dart';
 import 'package:movie_app/model/person_response.dart';
 import 'package:movie_app/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
