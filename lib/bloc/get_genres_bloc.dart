@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:movie_app/model/genre_response.dart';
 import 'package:movie_app/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,13 +12,7 @@ class GenresListBloc {
     _subject.sink.add(response);
   }
 
-  void drainStream() {
-    _subject.value = null;
-  }
-
-  @mustCallSuper
-  void dispose() async {
-    await _subject.drain();
+  dispose() {
     _subject.close();
   }
 
