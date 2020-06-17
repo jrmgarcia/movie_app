@@ -11,7 +11,7 @@ class MovieRepository {
   var getMoviesUrl = "$mainUrl/discover/movie";
   var getPlayingUrl = "$mainUrl/movie/now_playing";
   var getGenresUrl = "$mainUrl/genre/movie/list";
-  var getPersonsUrl = "$mainUrl/trending/person/week";
+  var getPersonsUrl = "$mainUrl/person/popular";
 
   Future<MovieResponse> getMovies() async {
     var params = {"api_key": apiKey, "language": "en-US", "page": 1};
@@ -64,7 +64,7 @@ class MovieRepository {
     }
   }
 
-  Future<MovieResponse> getMoviesByGenre(int id) async {
+  Future<MovieResponse> getMovieByGenre(int id) async {
     var params = {
       "api_key": apiKey,
       "language": "en-US",
