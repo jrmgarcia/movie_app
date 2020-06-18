@@ -64,7 +64,6 @@ class _GenresScreenState extends State<GenresScreen> {
 
   Widget _buildHomeWidget(GenreResponse data) {
     List<Genre> genres = data.genres;
-    print(genres);
     if (genres.length == 0) {
       return Container(
         width: MediaQuery.of(context).size.width,
