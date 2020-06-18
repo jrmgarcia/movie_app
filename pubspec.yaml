@@ -30,6 +30,8 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   page_indicator: ^0.3.0
   font_awesome_flutter: ^8.8.1
+  sliver_fab: ^1.0.0
+  youtube_player_flutter: ^7.0.0+3
 
 
 dev_dependencies:
