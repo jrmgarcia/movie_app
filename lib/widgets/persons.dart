@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movie_app/bloc/get_persons_bloc.dart';
 import 'package:movie_app/model/person.dart';
 import 'package:movie_app/model/person_response.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class PersonsList extends StatefulWidget {
   @override
@@ -11,7 +10,6 @@ class PersonsList extends StatefulWidget {
 }
 
 class _PersonsListState extends State<PersonsList> {
-  
   @override
   void initState() {
     super.initState();
@@ -25,30 +23,28 @@ class _PersonsListState extends State<PersonsList> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 10.0, top: 20.0),
-          child: Text("POPULAR PEOPLE", style: TextStyle(
-            color: Style.Colors.titleColor,
-            fontWeight: FontWeight.w500,
-            fontSize: 12.0
-          ),),
+          child: Text("POPULAR PEOPLE",
+              style: Theme.of(context).textTheme.subtitle2),
         ),
         SizedBox(
           height: 5.0,
         ),
         StreamBuilder<PersonResponse>(
-        stream: personsBloc.subject.stream,
-        builder: (context, AsyncSnapshot<PersonResponse> snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.error != null && snapshot.data.error.length > 0) {
-              return _buildErrorWidget(snapshot.data.error);
+          stream: personsBloc.subject.stream,
+          builder: (context, AsyncSnapshot<PersonResponse> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data.error != null &&
+                  snapshot.data.error.length > 0) {
+                return _buildErrorWidget(snapshot.data.error);
+              }
+              return _buildHomeWidget(snapshot.data);
+            } else if (snapshot.hasError) {
+              return _buildErrorWidget(snapshot.error);
+            } else {
+              return _buildLoadingWidget();
             }
-            return _buildHomeWidget(snapshot.data);
-          } else if (snapshot.hasError) {
-            return _buildErrorWidget(snapshot.error);
-          } else {
-            return _buildLoadingWidget();
-          }
-        },
-      )
+          },
+        )
       ],
     );
   }
@@ -62,8 +58,7 @@ class _PersonsListState extends State<PersonsList> {
           height: 25.0,
           width: 25.0,
           child: CircularProgressIndicator(
-            valueColor:
-                new AlwaysStoppedAnimation<Color>(Colors.white),
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
             strokeWidth: 4.0,
           ),
         )
@@ -86,7 +81,6 @@ class _PersonsListState extends State<PersonsList> {
     if (persons.length == 0) {
       return Container(
         width: MediaQuery.of(context).size.width,
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,61 +98,57 @@ class _PersonsListState extends State<PersonsList> {
       );
     } else
       return Container(
-        height: 116.0,
+        height: 120.0,
         padding: EdgeInsets.only(left: 10.0),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: persons.length,
           itemBuilder: (context, index) {
             return Container(
-              padding: EdgeInsets.only(
-                top: 10.0,
-                right: 8.0
-              ),
+              padding: EdgeInsets.only(top: 10.0, right: 8.0),
               width: 100.0,
               child: GestureDetector(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    persons[index].profileImg == null ?
-                    Hero(
-                      tag: persons[index].id,
-                      child: Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Style.Colors.secondColor
+                    persons[index].profileImg == null
+                        ? Hero(
+                            tag: persons[index].id,
+                            child: Container(
+                              width: 70.0,
+                              height: 70.0,
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).accentColor),
+                              child: Icon(
+                                FontAwesomeIcons.userAlt,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : Hero(
+                            tag: persons[index].id,
+                            child: Container(
+                                width: 70.0,
+                                height: 70.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          "https://image.tmdb.org/t/p/w300/" +
+                                              persons[index].profileImg)),
+                                )),
                           ),
-                          child: Icon(FontAwesomeIcons.userAlt, color: Colors.white,),
-                          ),
-                    ):
-                    Hero(
-                      tag: persons[index].id,
-                      child: Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage("https://image.tmdb.org/t/p/w300/" + persons[index].profileImg)),
-                          )),
-                    ),
                     SizedBox(
                       height: 10.0,
                     ),
                     Text(
                       persons[index].name,
                       maxLines: 2,
-                      style: TextStyle(
-                        height: 1.4,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 9.0),
+                      style: Theme.of(context).textTheme.caption,
+                      textAlign: TextAlign.center,
                     )
                   ],
                 ),

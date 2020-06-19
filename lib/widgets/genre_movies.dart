@@ -5,7 +5,6 @@ import 'package:movie_app/bloc/get_movies_byGenre_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/movie_response.dart';
 import 'package:movie_app/screens/detail_screen.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class GenreMovies extends StatefulWidget {
   final int genreId;
@@ -117,7 +116,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                             width: 120.0,
                             height: 180.0,
                             decoration: new BoxDecoration(
-                              color: Style.Colors.secondColor,
+                              color: Theme.of(context).accentColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(2.0)),
                               shape: BoxShape.rectangle,
@@ -154,11 +153,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                       child: Text(
                         movies[index].title,
                         maxLines: 1,
-                        style: TextStyle(
-                            height: 1.4,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11.0),
+                        style: Theme.of(context).textTheme.bodyText2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -170,10 +165,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                       children: <Widget>[
                         Text(
                           movies[index].rating.toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.caption,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -186,7 +178,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                             itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
                             itemBuilder: (context, _) => Icon(
                                   EvaIcons.star,
-                                  color: Style.Colors.secondColor,
+                                  color: Theme.of(context).accentColor,
                                 ))
                       ],
                     )

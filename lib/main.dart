@@ -9,11 +9,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Movie App',
+      title: 'Moviery: A Movie Discovering App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        accentColor: Colors.black
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.black,
+        accentColor: Colors.white
+      ),
+
       home: HomeScreen(),
     );
   }

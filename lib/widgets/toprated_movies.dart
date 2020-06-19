@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movie_app/bloc/get_movies_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/movie_response.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class TopRatedMovies extends StatefulWidget {
   @override
@@ -27,10 +26,7 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
           padding: const EdgeInsets.only(left: 10.0, top: 20.0),
           child: Text(
             "TOP RATED MOVIES",
-            style: TextStyle(
-                color: Style.Colors.titleColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 12.0),
+            style: Theme.of(context).textTheme.subtitle2,
           ),
         ),
         SizedBox(
@@ -141,12 +137,9 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
                       width: 100,
                       child: Text(
                         movies[index].title,
-                        maxLines: 2,
-                        style: TextStyle(
-                            height: 1.4,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11.0),
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyText2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -157,10 +150,7 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
                       children: <Widget>[
                         Text(
                           movies[index].rating.toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.caption,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -173,7 +163,7 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
                           itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
                           itemBuilder: (context, _) => Icon(
                             EvaIcons.star,
-                            color: Style.Colors.secondColor,
+                            color: Theme.of(context).accentColor,
                           )
                         )
                       ],

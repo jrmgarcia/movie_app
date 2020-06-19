@@ -10,8 +10,8 @@ import 'package:movie_app/widgets/casts.dart';
 import 'package:movie_app/widgets/movie_info.dart';
 import 'package:movie_app/widgets/similar_movies.dart';
 import 'package:sliver_fab/sliver_fab.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final Movie movie;
@@ -22,12 +22,23 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   final Movie movie;
+  List<PaletteColor> colors;
   _MovieDetailScreenState(this.movie);
 
   @override
   void initState() {
     super.initState();
     movieVideosBloc..getMovieVideos(movie.id);
+    colors = [];
+    _updatePalattes();
+  }
+
+  _updatePalattes() async {
+    final PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+      NetworkImage("https://image.tmdb.org/t/p/w200/" + movie.poster),
+    );
+
+    colors.add(generator.dominantColor);
   }
 
   @override
@@ -39,11 +50,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Style.Colors.mainColor,
+      backgroundColor: Theme.of(context).primaryColor,
       body: new Builder(
         builder: (context) {
           return new SliverFab(
-            floatingPosition: FloatingPosition(right: 20),
+            floatingPosition:
+                FloatingPosition(left: MediaQuery.of(context).size.width / 2.3),
             floatingWidget: StreamBuilder<VideoResponse>(
               stream: movieVideosBloc.subject.stream,
               builder: (context, AsyncSnapshot<VideoResponse> snapshot) {
@@ -60,19 +72,24 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 }
               },
             ),
-            expandedHeight: 200.0,
+            expandedHeight: MediaQuery.of(context).size.height / 1.2,
             slivers: <Widget>[
               new SliverAppBar(
-                backgroundColor: Style.Colors.mainColor,
-                expandedHeight: 200.0,
+                backgroundColor: Theme.of(context).primaryColor,
+                expandedHeight: MediaQuery.of(context).size.height / 1.4,
                 pinned: true,
                 flexibleSpace: new FlexibleSpaceBar(
+                    centerTitle: true,
                     title: Text(
                       movie.title.length > 40
-                          ? movie.title.substring(0, 37) + "..."
+                          ? movie.title.substring(0, 24) + "..."
                           : movie.title,
-                      style: TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.normal),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5,
                     ),
                     background: Stack(
                       children: <Widget>[
@@ -83,7 +100,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
                                     "https://image.tmdb.org/t/p/original/" +
-                                        movie.backPoster)),
+                                        movie.poster)),
                           ),
                           child: new Container(
                             decoration: new BoxDecoration(
@@ -100,8 +117,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   0.9
                                 ],
                                 colors: [
-                                  Colors.black.withOpacity(0.9),
-                                  Colors.black.withOpacity(0.0)
+                                  Theme.of(context).primaryColor,
+                                  Colors.transparent
                                 ]),
                           ),
                         ),
@@ -113,42 +130,43 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   sliver: SliverList(
                       delegate: SliverChildListDelegate([
                     Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 20.0),
-                      child: Row(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            movie.rating.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
                           RatingBarIndicator(
-                            itemSize: 10.0,
-                            rating: movie.rating / 2,
-                            direction: Axis.horizontal,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                            itemBuilder: (context, _) => Icon(
-                              EvaIcons.star,
-                              color: Style.Colors.secondColor,
-                            )
-                          )
+                              itemSize: 20.0,
+                              rating: movie.rating / 2,
+                              direction: Axis.horizontal,
+                              itemCount: 5,
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 2.0),
+                              itemBuilder: (context, _) => Icon(
+                                    EvaIcons.star,
+                                    color: colors.isNotEmpty
+                                        ? colors.first.color
+                                        : Theme.of(context).accentColor,
+                                  )),
+                          SizedBox(
+                            height: 100.0,
+                          ),
+                          Text("More",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .overline),
+                          Icon(EvaIcons.chevronDownOutline)
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 6,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 20.0),
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
                         "OVERVIEW",
-                        style: TextStyle(
-                            color: Style.Colors.titleColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0),
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ),
                     SizedBox(
@@ -158,8 +176,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         movie.overview,
-                        style: TextStyle(
-                            color: Colors.white, fontSize: 12.0, height: 1.5),
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ),
                     SizedBox(
@@ -201,7 +218,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   Widget _buildVideoWidget(VideoResponse data) {
     List<Video> videos = data.videos;
     return FloatingActionButton(
-      backgroundColor: Style.Colors.secondColor,
+      backgroundColor:
+          colors.isNotEmpty ? colors.first.color : Theme.of(context).accentColor,
       onPressed: () {
         Navigator.push(
           context,
@@ -209,10 +227,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             builder: (context) => VideoPlayerScreen(
               controller: YoutubePlayerController(
                 initialVideoId: videos[0].key,
-                flags: YoutubePlayerFlags(
-                  autoPlay: true,
-                  mute: true,
-                ),
+                flags: YoutubePlayerFlags(autoPlay: true),
               ),
             ),
           ),

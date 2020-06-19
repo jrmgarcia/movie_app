@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/bloc/get_movies_byGenre_bloc.dart';
 import 'package:movie_app/model/genre.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 import 'package:movie_app/widgets/genre_movies.dart';
 
 class GenresList extends StatefulWidget {
@@ -36,31 +35,29 @@ class _GenresListState extends State<GenresList>
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 307.0,
+        height: 300.0,
         child: DefaultTabController(
           length: genres.length,
           child: Scaffold(
-            backgroundColor: Style.Colors.mainColor,
+            backgroundColor: Theme.of(context).primaryColor,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(50.0),
               child: AppBar(
-                backgroundColor: Style.Colors.mainColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 bottom: TabBar(
                   controller: _tabController,
-                  indicatorColor: Style.Colors.secondColor,
+                  indicatorColor: Theme.of(context).accentColor,
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorWeight: 3.0,
-                  unselectedLabelColor: Style.Colors.titleColor,
+                  unselectedLabelColor:
+                      Theme.of(context).accentColor.withOpacity(0.5),
                   labelColor: Colors.white,
                   isScrollable: true,
                   tabs: genres.map((Genre genre) {
                     return Container(
                         padding: EdgeInsets.only(bottom: 15.0, top: 10.0),
-                        child: new Text(genre.name.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                            )));
+                        child: Text(genre.name.toUpperCase(),
+                            style: Theme.of(context).textTheme.subtitle2));
                   }).toList(),
                 ),
               ),

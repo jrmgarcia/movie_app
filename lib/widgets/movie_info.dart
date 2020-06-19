@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/bloc/get_movie_details_bloc.dart';
 import 'package:movie_app/model/movie_detail.dart';
 import 'package:movie_app/model/movie_detail_response.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class MovieInfo extends StatefulWidget {
   final int id;
@@ -72,20 +71,14 @@ class _MovieInfoState extends State<MovieInfo> {
                 children: <Widget>[
                   Text(
                     "BUDGET",
-                    style: TextStyle(
-                        color: Style.Colors.titleColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.0),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(
-                    detail.budget.toString() + "\$",
-                    style: TextStyle(
-                        color: Style.Colors.secondColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12.0),
+                    detail.budget.toString() + " \$",
+                    style: Theme.of(context).textTheme.bodyText2,
                   )
                 ],
               ),
@@ -94,19 +87,13 @@ class _MovieInfoState extends State<MovieInfo> {
                 children: <Widget>[
                   Text(
                     "DURATION",
-                    style: TextStyle(
-                        color: Style.Colors.titleColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.0),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
-                  Text(detail.runtime.toString() + "min",
-                      style: TextStyle(
-                          color: Style.Colors.secondColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0))
+                  Text(detail.runtime.toString() + " min",
+                      style: Theme.of(context).textTheme.bodyText2)
                 ],
               ),
               Column(
@@ -114,19 +101,13 @@ class _MovieInfoState extends State<MovieInfo> {
                 children: <Widget>[
                   Text(
                     "RELEASE DATE",
-                    style: TextStyle(
-                        color: Style.Colors.titleColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.0),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(detail.releaseDate,
-                      style: TextStyle(
-                          color: Style.Colors.secondColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0))
+                      style: Theme.of(context).textTheme.bodyText2)
                 ],
               )
             ],
@@ -142,10 +123,7 @@ class _MovieInfoState extends State<MovieInfo> {
             children: <Widget>[
               Text(
                 "GENRES",
-                style: TextStyle(
-                    color: Style.Colors.titleColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.0),
+                style: Theme.of(context).textTheme.subtitle2,
               ),
               SizedBox(
                 height: 10.0,
@@ -165,15 +143,11 @@ class _MovieInfoState extends State<MovieInfo> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
                             border:
-                                Border.all(width: 1.0, color: Colors.white)),
+                                Border.all(width: 1.0)),
                         child: Text(
                           detail.genres[index].name,
                           maxLines: 2,
-                          style: TextStyle(
-                              height: 1.4,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
                     );

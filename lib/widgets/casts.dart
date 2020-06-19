@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movie_app/bloc/get_casts_bloc.dart';
 import 'package:movie_app/model/cast.dart';
 import 'package:movie_app/model/cast_response.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class Casts extends StatefulWidget {
   final int id;
@@ -36,10 +35,7 @@ class _CastsState extends State<Casts> {
           padding: const EdgeInsets.only(left: 10.0, top: 20.0),
           child: Text(
             "CASTS",
-            style: TextStyle(
-                color: Style.Colors.titleColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 12.0),
+            style: Theme.of(context).textTheme.subtitle2,
           ),
         ),
         SizedBox(
@@ -114,7 +110,7 @@ class _CastsState extends State<Casts> {
       );
     } else
       return Container(
-        height: 140.0,
+        height: 160.0,
         padding: EdgeInsets.only(left: 10.0),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -136,7 +132,7 @@ class _CastsState extends State<Casts> {
                               height: 70.0,
                               decoration: new BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Style.Colors.secondColor),
+                                  color: Theme.of(context).accentColor),
                               child: Icon(
                                 FontAwesomeIcons.userAlt,
                                 color: Colors.white,
@@ -163,11 +159,8 @@ class _CastsState extends State<Casts> {
                     Text(
                       casts[index].name,
                       maxLines: 2,
-                      style: TextStyle(
-                          height: 1.4,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 9.0),
+                      style: Theme.of(context).textTheme.bodyText2,
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 3.0,
@@ -176,11 +169,7 @@ class _CastsState extends State<Casts> {
                       casts[index].character,
                       maxLines: 2,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          height: 1.4,
-                          color: Style.Colors.titleColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 7.0),
+                      style: Theme.of(context).textTheme.caption,
                     ),
                   ],
                 ),

@@ -4,7 +4,6 @@ import 'package:movie_app/bloc/get_now_playing_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/movie_response.dart';
 import 'package:page_indicator/page_indicator.dart';
-import 'package:movie_app/style/theme.dart' as Style;
 
 class NowPlaying extends StatefulWidget {
   @override
@@ -75,8 +74,8 @@ class _NowPlayingState extends State<NowPlaying> {
           align: IndicatorAlign.bottom,
           indicatorSpace: 8.0,
           padding: EdgeInsets.all(5.0),
-          indicatorColor: Style.Colors.titleColor,
-          indicatorSelectorColor: Style.Colors.secondColor,
+          indicatorColor: Colors.white,
+          indicatorSelectorColor: Theme.of(context).accentColor,
           shape: IndicatorShape.circle(size: 8.0),
           child: PageView.builder(itemBuilder: (context, index) {
             return Stack(children: <Widget>[
@@ -94,8 +93,8 @@ class _NowPlayingState extends State<NowPlaying> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [
-                          Style.Colors.mainColor.withOpacity(1.0),
-                          Style.Colors.mainColor.withOpacity(0.0)
+                          Theme.of(context).primaryColor.withOpacity(1.0),
+                          Theme.of(context).primaryColor.withOpacity(0.0)
                         ],
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
@@ -106,7 +105,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 bottom: 0,
                 right: 0,
                 left: 0,
-                child: Icon(FontAwesomeIcons.playCircle, color: Style.Colors.secondColor, size: 40.0,),
+                child: Icon(FontAwesomeIcons.playCircle, color: Theme.of(context).accentColor, size: 40.0,),
               ),
               Positioned(
                 bottom: 30.0,

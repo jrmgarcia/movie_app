@@ -18,7 +18,7 @@ class _GenresScreenState extends State<GenresScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<GenreResponse>(
+    return StreamBuilder<GenreResponse> (
       stream: genresBloc.subject.stream,
       builder: (context, AsyncSnapshot<GenreResponse> snapshot) {
         if (snapshot.hasData) {
