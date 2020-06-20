@@ -22,14 +22,14 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   final Movie movie;
-  List<PaletteColor> colors;
+  PaletteColor dominant;
   _MovieDetailScreenState(this.movie);
 
   @override
   void initState() {
     super.initState();
     movieVideosBloc..getMovieVideos(movie.id);
-    colors = [];
+    dominant = PaletteColor(Colors.amber, 1);
     _updatePalattes();
   }
 
@@ -38,7 +38,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       NetworkImage("https://image.tmdb.org/t/p/w200/" + movie.poster),
     );
 
-    colors.add(generator.dominantColor);
+    setState(() {
+      dominant = generator.dominantColor;
+    });
   }
 
   @override
@@ -87,26 +89,19 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     background: Stack(
                       children: <Widget>[
                         Container(
-                          decoration: new BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            image: new DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    "https://image.tmdb.org/t/p/original/" +
-                                        movie.poster)),
-                          ),
-                          child: new Container(
                             decoration: new BoxDecoration(
-                                color: Colors.black.withOpacity(0.5)),
-                          ),
-                        ),
+                          shape: BoxShape.rectangle,
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  "https://image.tmdb.org/t/p/original/" +
+                                      movie.poster)),
+                        )),
                         Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -144,17 +139,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                   EdgeInsets.symmetric(horizontal: 2.0),
                               itemBuilder: (context, _) => Icon(
                                     EvaIcons.star,
-                                    color: colors.isNotEmpty
-                                        ? colors.first.color
-                                        : Theme.of(context).accentColor,
+                                    color: dominant.color,
                                   )),
                           SizedBox(
                             height: 100.0,
                           ),
                           Text("More",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .overline),
+                              style: Theme.of(context).textTheme.overline),
                           Icon(EvaIcons.chevronDownOutline)
                         ],
                       ),
@@ -218,8 +209,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   Widget _buildVideoWidget(VideoResponse data) {
     List<Video> videos = data.videos;
     return FloatingActionButton(
-      backgroundColor:
-          colors.isNotEmpty ? colors.first.color : Theme.of(context).accentColor,
+      backgroundColor: dominant.color,
       onPressed: () {
         Navigator.push(
           context,

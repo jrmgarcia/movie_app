@@ -142,8 +142,7 @@ class _MovieInfoState extends State<MovieInfo> {
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
-                            border:
-                                Border.all(width: 1.0)),
+                            border: Border.all(width: 1.0, color: Theme.of(context).accentColor)),
                         child: Text(
                           detail.genres[index].name,
                           maxLines: 2,

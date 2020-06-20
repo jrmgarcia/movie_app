@@ -135,7 +135,7 @@ class _CastsState extends State<Casts> {
                                   color: Theme.of(context).accentColor),
                               child: Icon(
                                 FontAwesomeIcons.userAlt,
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           )

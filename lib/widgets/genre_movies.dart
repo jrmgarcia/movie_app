@@ -178,7 +178,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                             itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
                             itemBuilder: (context, _) => Icon(
                                   EvaIcons.star,
-                                  color: Theme.of(context).accentColor,
+                                  color: Colors.amber,
                                 ))
                       ],
                     )

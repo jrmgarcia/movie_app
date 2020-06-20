@@ -11,16 +11,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Moviery: A Movie Discovering App',
       theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.white,
-        accentColor: Colors.black
-      ),
+          brightness: Brightness.light,
+          primaryColor: Colors.white,
+          accentColor: Colors.black),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.black,
-        accentColor: Colors.white
-      ),
-
+          brightness: Brightness.dark,
+          primaryColor: Colors.black,
+          accentColor: Colors.white),
       home: HomeScreen(),
     );
   }
